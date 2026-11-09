@@ -1,0 +1,30 @@
+test_candidate_cannot_promote_unknown_scope_or_changed_id (test_acceptance.AcceptanceRegression.test_candidate_cannot_promote_unknown_scope_or_changed_id) ... ok
+test_cli_capture_context_and_restore_end_to_end (test_acceptance.AcceptanceRegression.test_cli_capture_context_and_restore_end_to_end) ... ok
+test_corrupt_candidate_is_reported_without_traceback_or_promotion (test_acceptance.AcceptanceRegression.test_corrupt_candidate_is_reported_without_traceback_or_promotion) ... ok
+test_invalid_utf8_manifest_is_cleanly_reported (test_acceptance.AcceptanceRegression.test_invalid_utf8_manifest_is_cleanly_reported) ... ok
+test_unreadable_directory_does_not_create_incomplete_backup (test_acceptance.AcceptanceRegression.test_unreadable_directory_does_not_create_incomplete_backup) ... ok
+test_version_prefix_does_not_displace_exact_version (test_acceptance.AcceptanceRegression.test_version_prefix_does_not_displace_exact_version) ... ok
+test_chinese_sentence_retrieves_related_project_document_only (test_app.WorkspaceTest.test_chinese_sentence_retrieves_related_project_document_only) ... ok
+test_context_respects_project_and_experience_approval (test_app.WorkspaceTest.test_context_respects_project_and_experience_approval) ... ok
+test_dotted_firmware_version_is_prioritized (test_app.WorkspaceTest.test_dotted_firmware_version_is_prioritized) ... ok
+test_exact_version_is_prioritized_when_results_are_bounded (test_app.WorkspaceTest.test_exact_version_is_prioritized_when_results_are_bounded) ... ok
+test_init_is_idempotent_and_does_not_overwrite_background (test_app.WorkspaceTest.test_init_is_idempotent_and_does_not_overwrite_background) ... ok
+test_intake_preserves_original_and_disallows_unknown_project (test_app.WorkspaceTest.test_intake_preserves_original_and_disallows_unknown_project) ... ok
+test_oversized_document_is_reported (test_app.WorkspaceTest.test_oversized_document_is_reported) ... ok
+test_project_file_matches_are_bounded_and_report_truncation (test_app.WorkspaceTest.test_project_file_matches_are_bounded_and_report_truncation) ... ok
+test_project_id_cannot_escape_workspace (test_app.WorkspaceTest.test_project_id_cannot_escape_workspace) ... ok
+test_project_symlink_cannot_read_another_project (test_app.WorkspaceTest.test_project_symlink_cannot_read_another_project) ... skipped "创建符号链接不可用: [WinError 1314] 客户端没有所需的特权。: '<TEMP>\\\\tmp5l1zinkl\\\\workspace\\\\projects\\\\chip-b' -> '<TEMP>\\\\tmp5l1zinkl\\\\workspace\\\\projects\\\\chip-a'"
+test_unapproved_or_malformed_experience_is_not_used (test_app.WorkspaceTest.test_unapproved_or_malformed_experience_is_not_used) ... ok
+test_archive_symlink_and_windows_path_are_rejected (test_backup.BackupTest.test_archive_symlink_and_windows_path_are_rejected) ... ok
+test_backup_cannot_be_created_inside_source (test_backup.BackupTest.test_backup_cannot_be_created_inside_source) ... ok
+test_backup_with_modified_contents_fails_and_no_restore_left (test_backup.BackupTest.test_backup_with_modified_contents_fails_and_no_restore_left) ... ok
+test_create_or_restore_will_not_overwrite (test_backup.BackupTest.test_create_or_restore_will_not_overwrite) ... ok
+test_real_restore_includes_audio_and_preserves_bytes (test_backup.BackupTest.test_real_restore_includes_audio_and_preserves_bytes) ... ok
+test_zip_traversal_is_rejected_without_writing_outside (test_backup.BackupTest.test_zip_traversal_is_rejected_without_writing_outside) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 1.234s
+
+OK (skipped=1)
+
+Captured output:

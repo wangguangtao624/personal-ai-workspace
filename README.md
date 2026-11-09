@@ -49,6 +49,7 @@ python app.py --data data experience approve 示例编号
 - [同步与备份](docs/同步与备份.md)：双设备、冲突、独立备份和恢复检查。
 - [验收标准](docs/验收标准.md)：本地能力的测试要求，以及 AI、真实双设备和外部服务的独立验收条件。
 - [GPT-6.1 验收报告](docs/GPT-6.1验收报告.md)：全项目复核、缺陷修复、测试结果和未实现的产品需求。
+- [逐项测试结果与运行证据](reports/acceptance/README.md)：每项测试的目的、结果和耗时，附 JSON 结果、完整输出及源文件校验值。执行 `python scripts/run_acceptance.py` 可重新生成。
 - [个人背景模板](templates/个人背景.md)、[岗位背景模板](templates/岗位背景.md)、[项目背景模板](templates/项目背景.md)、[目标模板](templates/目标.md)。
 - `.agents/skills/`：输入整理、固件测试、PPT、目标规划和反馈沉淀的 Codex 工作流程；使用需要相应 Codex 环境和必要的文件权限。
 

@@ -1,0 +1,188 @@
+{
+  "executed_at_utc": "2026-11-09T17:58:04.343119+00:00",
+  "environment": {
+    "os": "Windows",
+    "release": "11",
+    "python": "3.12.14"
+  },
+  "command": "python scripts/run_acceptance.py",
+  "tested_revision": "e84e949135d508cf9e7beab392c34090070f7f6e plus evidence runner (see hashes)",
+  "summary": {
+    "total": 23,
+    "passed": 22,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0
+  },
+  "source_sha256": {
+    "app.py": "41b8da838a9dc25954a2ee02894ea13138fe1d17e309ae2ceff0eb05a004200f",
+    "backup.py": "2312950847255e6c3875346347280e6748dafcdc773aefaec121abee0d07b337",
+    "scripts/run_acceptance.py": "4f96fd1d1c213d526d788c4f78d8555cc60afadcb5e58456c4a0f4f71f205abe",
+    "tests/test_acceptance.py": "74fc4cf929329ebd90a286bdd8d078ce788cda8e26fda364fc9793ff1a6138d1",
+    "tests/test_app.py": "ecb784ba6ae0bb2a6e271d3af51e9153ac5d4dc797c6a65a95a2aaeb2feaa546",
+    "tests/test_backup.py": "534491fc599518a7f06ff658340f7988f1167cac9ac8008f4810628ecd4649f2"
+  },
+  "cases": [
+    {
+      "id": "test_acceptance.AcceptanceRegression.test_candidate_cannot_promote_unknown_scope_or_changed_id",
+      "purpose": "拒绝不存在的项目、被修改编号、错误状态及空经验，保留原候选。",
+      "status": "PASS",
+      "seconds": 0.023,
+      "detail": ""
+    },
+    {
+      "id": "test_acceptance.AcceptanceRegression.test_cli_capture_context_and_restore_end_to_end",
+      "purpose": "通过子进程完成创建项目、收集、检索、备份、验证、恢复和恢复后读取。",
+      "status": "PASS",
+      "seconds": 0.6946,
+      "detail": ""
+    },
+    {
+      "id": "test_acceptance.AcceptanceRegression.test_corrupt_candidate_is_reported_without_traceback_or_promotion",
+      "purpose": "JSON 数组候选返回错误而非崩溃，不晋升、不删除原记录。",
+      "status": "PASS",
+      "seconds": 0.0104,
+      "detail": ""
+    },
+    {
+      "id": "test_acceptance.AcceptanceRegression.test_invalid_utf8_manifest_is_cleanly_reported",
+      "purpose": "备份清单编码异常时命令返回错误。",
+      "status": "PASS",
+      "seconds": 0.014,
+      "detail": ""
+    },
+    {
+      "id": "test_acceptance.AcceptanceRegression.test_unreadable_directory_does_not_create_incomplete_backup",
+      "purpose": "模拟目录权限错误，确保备份失败且不留下不完整快照。",
+      "status": "PASS",
+      "seconds": 0.0072,
+      "detail": ""
+    },
+    {
+      "id": "test_acceptance.AcceptanceRegression.test_version_prefix_does_not_displace_exact_version",
+      "purpose": "V1.2.30 不得按 V1.2.3 的精确匹配参与排名。",
+      "status": "PASS",
+      "seconds": 0.0613,
+      "detail": ""
+    },
+    {
+      "id": "test_app.WorkspaceTest.test_chinese_sentence_retrieves_related_project_document_only",
+      "purpose": "中文长句召回当前项目资料，排除其他项目内容。",
+      "status": "PASS",
+      "seconds": 0.0252,
+      "detail": ""
+    },
+    {
+      "id": "test_app.WorkspaceTest.test_context_respects_project_and_experience_approval",
+      "purpose": "经验确认前不加载，确认后仅用于指定项目。",
+      "status": "PASS",
+      "seconds": 0.0499,
+      "detail": ""
+    },
+    {
+      "id": "test_app.WorkspaceTest.test_dotted_firmware_version_is_prioritized",
+      "purpose": "带小数点的固件版本在有限检索结果中优先。",
+      "status": "PASS",
+      "seconds": 0.0607,
+      "detail": ""
+    },
+    {
+      "id": "test_app.WorkspaceTest.test_exact_version_is_prioritized_when_results_are_bounded",
+      "purpose": "型号版本精确关键词在结果超过上限时仍能命中。",
+      "status": "PASS",
+      "seconds": 0.0618,
+      "detail": ""
+    },
+    {
+      "id": "test_app.WorkspaceTest.test_init_is_idempotent_and_does_not_overwrite_background",
+      "purpose": "重复初始化保留已有背景。",
+      "status": "PASS",
+      "seconds": 0.0103,
+      "detail": ""
+    },
+    {
+      "id": "test_app.WorkspaceTest.test_intake_preserves_original_and_disallows_unknown_project",
+      "purpose": "原始附件字节保留，不存在的项目关联被拒绝。",
+      "status": "PASS",
+      "seconds": 0.0191,
+      "detail": ""
+    },
+    {
+      "id": "test_app.WorkspaceTest.test_oversized_document_is_reported",
+      "purpose": "超大文件未参与搜索时明确提示。",
+      "status": "PASS",
+      "seconds": 0.0192,
+      "detail": ""
+    },
+    {
+      "id": "test_app.WorkspaceTest.test_project_file_matches_are_bounded_and_report_truncation",
+      "purpose": "项目资料结果数受限且显示截断。",
+      "status": "PASS",
+      "seconds": 0.06,
+      "detail": ""
+    },
+    {
+      "id": "test_app.WorkspaceTest.test_project_id_cannot_escape_workspace",
+      "purpose": "拒绝项目路径穿越及无效标识。",
+      "status": "PASS",
+      "seconds": 0.0129,
+      "detail": ""
+    },
+    {
+      "id": "test_app.WorkspaceTest.test_project_symlink_cannot_read_another_project",
+      "purpose": "真实项目符号链接不得越界读取；环境不允许创建时跳过。",
+      "status": "SKIP",
+      "seconds": 0.0102,
+      "detail": "创建符号链接不可用: [WinError 1314] 客户端没有所需的特权。: '<TEMP>\\\\tmp5l1zinkl\\\\workspace\\\\projects\\\\chip-b' -> '<TEMP>\\\\tmp5l1zinkl\\\\workspace\\\\projects\\\\chip-a'"
+    },
+    {
+      "id": "test_app.WorkspaceTest.test_unapproved_or_malformed_experience_is_not_used",
+      "purpose": "异常 JSON 和未批准经验不进入上下文。",
+      "status": "PASS",
+      "seconds": 0.0197,
+      "detail": ""
+    },
+    {
+      "id": "test_backup.BackupTest.test_archive_symlink_and_windows_path_are_rejected",
+      "purpose": "拒绝恶意 ZIP 符号链接及 Windows 路径穿越。",
+      "status": "PASS",
+      "seconds": 0.0111,
+      "detail": ""
+    },
+    {
+      "id": "test_backup.BackupTest.test_backup_cannot_be_created_inside_source",
+      "purpose": "拒绝将快照写进源目录。",
+      "status": "PASS",
+      "seconds": 0.0033,
+      "detail": ""
+    },
+    {
+      "id": "test_backup.BackupTest.test_backup_with_modified_contents_fails_and_no_restore_left",
+      "purpose": "损坏快照校验失败，清理未完成的恢复目录。",
+      "status": "PASS",
+      "seconds": 0.0235,
+      "detail": ""
+    },
+    {
+      "id": "test_backup.BackupTest.test_create_or_restore_will_not_overwrite",
+      "purpose": "不覆盖已有快照或目标数据。",
+      "status": "PASS",
+      "seconds": 0.0118,
+      "detail": ""
+    },
+    {
+      "id": "test_backup.BackupTest.test_real_restore_includes_audio_and_preserves_bytes",
+      "purpose": "恢复模拟录音、中文文本和空目录并验证内容。",
+      "status": "PASS",
+      "seconds": 0.0135,
+      "detail": ""
+    },
+    {
+      "id": "test_backup.BackupTest.test_zip_traversal_is_rejected_without_writing_outside",
+      "purpose": "恶意归档路径不能写出恢复目录。",
+      "status": "PASS",
+      "seconds": 0.0112,
+      "detail": ""
+    }
+  ]
+}
