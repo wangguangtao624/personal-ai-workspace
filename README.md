@@ -8,7 +8,7 @@
 
 ## 开始使用
 
-1. 安装可用的 Python 3，并在终端中进入项目根目录。Windows 可将下文的 `python` 换成可用的 `py`。
+1. 安装 Python 3.12 或更新版本，并在终端中进入项目根目录。Windows 可将下文的 `python` 换成可用的 `py`。
 2. 执行 `python app.py --data data init` 创建数据区。`data/` 是本机资料；确认项目的 Git 忽略设置后，再决定哪些资料有权进入私有仓库。不要提交密码、API 密钥和受限制的资料。
 3. 编辑 `data/context/personal/profile.md` 和 `data/context/role/role.md`。创建项目后，编辑 `data/projects/<项目标识>/overview.md`。也可参考 `templates/` 中的模板；未填的字段就是未知信息，不是事实。
 4. 在本项目中打开 Codex，提交任务，要求它阅读适用的 `AGENTS.md` 和相关资料。也可先通过 CLI 生成上下文，再请 Codex检查和完成任务。
@@ -48,6 +48,7 @@ python app.py --data data experience approve 示例编号
 - [操作指南](docs/操作指南.md)：背景录入、固件测试、PPT 与经验反馈。
 - [同步与备份](docs/同步与备份.md)：双设备、冲突、独立备份和恢复检查。
 - [验收标准](docs/验收标准.md)：本地能力的测试要求，以及 AI、真实双设备和外部服务的独立验收条件。
+- [GPT-6.1 验收报告](docs/GPT-6.1验收报告.md)：全项目复核、缺陷修复、测试结果和未实现的产品需求。
 - [个人背景模板](templates/个人背景.md)、[岗位背景模板](templates/岗位背景.md)、[项目背景模板](templates/项目背景.md)、[目标模板](templates/目标.md)。
 - `.agents/skills/`：输入整理、固件测试、PPT、目标规划和反馈沉淀的 Codex 工作流程；使用需要相应 Codex 环境和必要的文件权限。
 

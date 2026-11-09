@@ -17,6 +17,17 @@ ID_PATTERN = re.compile(r"^[a-z0-9][a-z0-9_-]{0,63}$")
 MAX_SOURCE_CHARS = 12000
 MAX_MATCHED_PROJECT_FILES = 20
 MAX_TASK_SEARCH_CHARS = 256
+DATA_DIRECTORIES = ("inbox", "attachments", "context/personal", "context/role", "projects", "experience/candidates", "experience/approved", "outputs", "daily", "goals")
+
+
+def check_data_paths(root: Path) -> None:
+    # Refuse linked storage containers before either reads or writes.
+    for rel in (*DATA_DIRECTORIES, '.personal-ai-workspace'):
+        current = root
+        for part in Path(rel).parts:
+            current = current / part
+            if current.is_symlink() or getattr(current, 'is_junction', lambda: False)():
+                raise ValueError("数据目录中存在链接或目录联接，请改用独立本地目录。")
 
 
 def stamp() -> str:
@@ -46,6 +57,7 @@ def write_atomic(path: Path, text: str) -> None:
 
 
 def ensure_initialized(root: Path) -> None:
+    check_data_paths(root)
     if not (root / ".personal-ai-workspace").is_file():
         raise ValueError("数据目录尚未初始化，请先运行 init。")
 
@@ -71,7 +83,8 @@ def get_project(root: Path, project_id: str) -> Path:
 
 def initialize(root: Path) -> None:
     root.mkdir(parents=True, exist_ok=True)
-    for directory in ("inbox", "attachments", "context/personal", "context/role", "projects", "experience/candidates", "experience/approved", "outputs", "daily", "goals"):
+    check_data_paths(root)
+    for directory in DATA_DIRECTORIES:
         (root / directory).mkdir(parents=True, exist_ok=True)
     marker = root / ".personal-ai-workspace"
     if not marker.exists():
@@ -172,8 +185,14 @@ def make_context(root: Path, project_id: str, task: str) -> str:
         body = file.read_text(encoding="utf-8", errors="replace")
         haystack = (file.name + " " + body).lower()
         # Score unique terms, giving exact version/model tokens a stronger signal.
-        score = sum((5 if re.fullmatch(r"[a-z0-9_.-]{4,}", w) else 1)
-                    for w in set(words) if w in haystack)
+        score = 0
+        for word in set(words):
+            if re.fullmatch(r'[a-z0-9_.-]+', word):
+                # V1.2.3 must not count as an exact match for V1.2.30.
+                if re.search(r'(?<![a-z0-9_.-])' + re.escape(word) + r'(?![a-z0-9_.-])', haystack):
+                    score += 5 if len(word) >= 4 else 1
+            elif word in haystack:
+                score += 1
         if score:
             ranked_matches.append((score, file))
     ranked_matches.sort(key=lambda item: (-item[0], item[1].as_posix()))
@@ -226,11 +245,20 @@ def approve(root: Path, entry_id: str) -> None:
         raise ValueError("经验编号格式不正确。")
     candidate = root / "experience/candidates" / f"{entry_id}.json"
     approved = root / "experience/approved" / f"{entry_id}.json"
+    if candidate.is_symlink() or not is_within(candidate, root / 'experience/candidates'):
+        raise ValueError("经验候选必须位于本地候选目录。")
     if not candidate.is_file():
         raise ValueError("经验候选不存在。")
     if approved.exists():
         raise ValueError("经验已确认。")
     data = json.loads(candidate.read_text(encoding="utf-8"))
+    if (not isinstance(data, dict) or data.get('id') != entry_id
+            or data.get('status') != 'candidate'
+            or not isinstance(data.get('text'), str) or not data['text'].strip()
+            or not isinstance(data.get('scope'), str)):
+        raise ValueError("经验候选格式无效，请修正原始记录后重试。")
+    if data['scope'] != 'general':
+        get_project(root, data['scope'])
     data.update(status="approved", approved_at_utc=stamp())
     write_atomic(approved, json.dumps(data, ensure_ascii=False, indent=2) + "\n")
     candidate.unlink()

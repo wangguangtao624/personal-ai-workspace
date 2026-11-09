@@ -19,6 +19,10 @@ MAX_MANIFEST = 8 * 1024 * 1024
 MAX_TOTAL = 20 * 1024 * 1024 * 1024
 
 
+def walk_error(error: OSError) -> None:
+    raise error
+
+
 def safe_relative(value: str) -> str:
     if not isinstance(value, str) or not value or '\\' in value or ':' in value or '\x00' in value:
         raise ValueError('备份包含不安全的路径。')
@@ -53,12 +57,12 @@ def create(source: Path, archive: Path) -> None:
     if archive.exists():
         raise ValueError('备份文件已存在，请选择新文件名。')
     files, directories = [], []
-    for root, dirs, names in os.walk(source, followlinks=False):
+    for root, dirs, names in os.walk(source, followlinks=False, onerror=walk_error):
         root_path = Path(root)
         dirs.sort(); names.sort()
         for name in dirs:
             p = root_path / name
-            if p.is_symlink():
+            if p.is_symlink() or getattr(p, 'is_junction', lambda: False)():
                 raise ValueError(f'不支持符号链接：{p}')
             if name == '.git':
                 continue
