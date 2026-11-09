@@ -78,6 +78,52 @@ class WorkspaceTest(unittest.TestCase):
         self.assertIn("匹配结果超过", report)
         self.assertNotIn("sources/20.md", report)
 
+    def test_exact_version_is_prioritized_when_results_are_bounded(self):
+        with contextlib.redirect_stdout(io.StringIO()):
+            app.create_project(self.root, "chip-a", "芯片 A")
+        sources = self.root / "projects/chip-a/sources"
+        for i in range(app.MAX_MATCHED_PROJECT_FILES):
+            (sources / f"{i:02}.md").write_text("固件测试历史资料", encoding="utf-8")
+        (sources / "zz-current.md").write_text("固件版本 FW1234 的测试规范", encoding="utf-8")
+        report = app.make_context(self.root, "chip-a", "固件测试 FW1234")
+        self.assertIn("sources/zz-current.md", report)
+        self.assertIn("匹配结果超过", report)
+
+    def test_dotted_firmware_version_is_prioritized(self):
+        with contextlib.redirect_stdout(io.StringIO()):
+            app.create_project(self.root, "chip-a", "芯片 A")
+        sources = self.root / "projects/chip-a/sources"
+        for i in range(app.MAX_MATCHED_PROJECT_FILES):
+            (sources / f"{i:02}.md").write_text("固件 V1.2.0 测试历史资料", encoding="utf-8")
+        (sources / "zz-current.md").write_text("固件 V1.2.3 测试资料", encoding="utf-8")
+        report = app.make_context(self.root, "chip-a", "固件 V1.2.3 测试")
+        self.assertIn("sources/zz-current.md", report)
+
+    def test_unapproved_or_malformed_experience_is_not_used(self):
+        with contextlib.redirect_stdout(io.StringIO()):
+            app.create_project(self.root, "chip-a", "芯片 A")
+        folder = self.root / "experience/approved"
+        (folder / "invalid.json").write_text("[]", encoding="utf-8")
+        (folder / "unapproved.json").write_text(json.dumps({"status": "candidate", "scope": "general", "text": "待确认信息"}), encoding="utf-8")
+        self.assertNotIn("待确认信息", app.make_context(self.root, "chip-a", "测试"))
+
+    def test_oversized_document_is_reported(self):
+        with contextlib.redirect_stdout(io.StringIO()):
+            app.create_project(self.root, "chip-a", "芯片 A")
+        (self.root / "projects/chip-a/sources/large.md").write_text("x" * 1000001, encoding="utf-8")
+        self.assertIn("1 个项目文件超过 1000000 字节", app.make_context(self.root, "chip-a", "固件"))
+
+    def test_project_symlink_cannot_read_another_project(self):
+        with contextlib.redirect_stdout(io.StringIO()):
+            app.create_project(self.root, "chip-b", "机密项目 B")
+        alias = self.root / "projects/chip-a"
+        try:
+            alias.symlink_to(self.root / "projects/chip-b", target_is_directory=True)
+        except OSError as exc:
+            self.skipTest(f"创建符号链接不可用: {exc}")
+        with self.assertRaises(ValueError):
+            app.make_context(self.root, "chip-a", "固件测试")
+
 
 if __name__ == "__main__":
     unittest.main()
