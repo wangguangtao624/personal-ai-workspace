@@ -13,7 +13,7 @@ test_intake_preserves_original_and_disallows_unknown_project (test_app.Workspace
 test_oversized_document_is_reported (test_app.WorkspaceTest.test_oversized_document_is_reported) ... ok
 test_project_file_matches_are_bounded_and_report_truncation (test_app.WorkspaceTest.test_project_file_matches_are_bounded_and_report_truncation) ... ok
 test_project_id_cannot_escape_workspace (test_app.WorkspaceTest.test_project_id_cannot_escape_workspace) ... ok
-test_project_symlink_cannot_read_another_project (test_app.WorkspaceTest.test_project_symlink_cannot_read_another_project) ... skipped "创建符号链接不可用: [WinError 1314] 客户端没有所需的特权。: '<TEMP>\\\\tmp5l1zinkl\\\\workspace\\\\projects\\\\chip-b' -> '<TEMP>\\\\tmp5l1zinkl\\\\workspace\\\\projects\\\\chip-a'"
+test_project_symlink_cannot_read_another_project (test_app.WorkspaceTest.test_project_symlink_cannot_read_another_project) ... skipped "创建符号链接不可用: [WinError 1314] 客户端没有所需的特权。: '<TEMP>\\\\tmp0btob4il\\\\workspace\\\\projects\\\\chip-b' -> '<TEMP>\\\\tmp0btob4il\\\\workspace\\\\projects\\\\chip-a'"
 test_unapproved_or_malformed_experience_is_not_used (test_app.WorkspaceTest.test_unapproved_or_malformed_experience_is_not_used) ... ok
 test_archive_symlink_and_windows_path_are_rejected (test_backup.BackupTest.test_archive_symlink_and_windows_path_are_rejected) ... ok
 test_backup_cannot_be_created_inside_source (test_backup.BackupTest.test_backup_cannot_be_created_inside_source) ... ok
@@ -21,10 +21,25 @@ test_backup_with_modified_contents_fails_and_no_restore_left (test_backup.Backup
 test_create_or_restore_will_not_overwrite (test_backup.BackupTest.test_create_or_restore_will_not_overwrite) ... ok
 test_real_restore_includes_audio_and_preserves_bytes (test_backup.BackupTest.test_real_restore_includes_audio_and_preserves_bytes) ... ok
 test_zip_traversal_is_rejected_without_writing_outside (test_backup.BackupTest.test_zip_traversal_is_rejected_without_writing_outside) ... ok
+test_completed_job_exposes_result_in_shared_queue (test_transcription_queue.QueueTest.test_completed_job_exposes_result_in_shared_queue) ... ok
+test_failed_job_preserves_audio_and_marks_failed (test_transcription_queue.QueueTest.test_failed_job_preserves_audio_and_marks_failed) ... ok
+test_invalid_files_and_projects_rejected (test_transcription_queue.QueueTest.test_invalid_files_and_projects_rejected) ... ok
+test_malformed_job_is_marked_failed_without_crashing (test_transcription_queue.QueueTest.test_malformed_job_is_marked_failed_without_crashing) ... ok
+test_submit_is_atomic_and_preserves_audio (test_transcription_queue.QueueTest.test_submit_is_atomic_and_preserves_audio) ... ok
 
 ----------------------------------------------------------------------
-Ran 23 tests in 1.234s
+Ran 28 tests in 1.447s
 
 OK (skipped=1)
 
 Captured output:
+数据目录已初始化：<TEMP>\tmpfw7zxw6r\data
+项目已创建：<TEMP>\tmpfw7zxw6r\data\projects\chip-a
+数据目录已初始化：<TEMP>\tmp5sx4cgr4\data
+项目已创建：<TEMP>\tmp5sx4cgr4\data\projects\chip-a
+数据目录已初始化：<TEMP>\tmpzyjqnvp8\data
+项目已创建：<TEMP>\tmpzyjqnvp8\data\projects\chip-a
+数据目录已初始化：<TEMP>\tmp7vhrfg0f\data
+项目已创建：<TEMP>\tmp7vhrfg0f\data\projects\chip-a
+数据目录已初始化：<TEMP>\tmpyrnozb3_\data
+项目已创建：<TEMP>\tmpyrnozb3_\data\projects\chip-a

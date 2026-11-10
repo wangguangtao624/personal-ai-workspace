@@ -18,6 +18,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 PURPOSES = {
+    'test_submit_is_atomic_and_preserves_audio': '任务完整写入暂存后才发布，并保留原始音频。',
+    'test_invalid_files_and_projects_rejected': '拒绝不受支持的文件及不安全项目标识。',
+    'test_failed_job_preserves_audio_and_marks_failed': '模拟转写失败，任务进入失败状态且保留音频。',
+    'test_malformed_job_is_marked_failed_without_crashing': '错误任务元数据归档失败并保留音频。',
+    'test_completed_job_exposes_result_in_shared_queue': '模拟成功任务，将结果交还共享队列且不重复处理。',
     'test_candidate_cannot_promote_unknown_scope_or_changed_id': '拒绝不存在的项目、被修改编号、错误状态及空经验，保留原候选。',
     'test_cli_capture_context_and_restore_end_to_end': '通过子进程完成创建项目、收集、检索、备份、验证、恢复和恢复后读取。',
     'test_corrupt_candidate_is_reported_without_traceback_or_promotion': 'JSON 数组候选返回错误而非崩溃，不晋升、不删除原记录。',
@@ -97,7 +102,7 @@ def main() -> int:
     captured = io.StringIO()
     with contextlib.redirect_stdout(captured), contextlib.redirect_stderr(captured):
         result = unittest.TextTestRunner(stream=stream, verbosity=2, resultclass=EvidenceResult).run(suite)
-    files = [ROOT / 'app.py', ROOT / 'backup.py', Path(__file__), *sorted((ROOT / 'tests').glob('test_*.py'))]
+    files = [ROOT / 'app.py', ROOT / 'backup.py', ROOT / 'transcribe_local.py', ROOT / 'transcription_queue.py', Path(__file__), *sorted((ROOT / 'tests').glob('test_*.py'))]
     evidence = {'executed_at_utc': datetime.now(timezone.utc).isoformat(),
                 'environment': {'os': platform.system(), 'release': platform.release(), 'python': platform.python_version()},
                 'command': 'python scripts/run_acceptance.py',
